@@ -104,6 +104,7 @@ public class MainActivity extends AppCompatActivity {
             editor.putInt("highscore", highscore);
             editor.commit();
             highscoreText.setText("High score: 0");
+            newHighscore.setText("");
         }
 
         return super.onOptionsItemSelected(item);
