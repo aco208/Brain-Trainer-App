@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     int highscore;
     TextView highscoreText, newHighscore;
     boolean doubleBackToExitPressedOnce;
+    SharedPreferences prefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
         doubleBackToExitPressedOnce = false;
 
-        SharedPreferences prefs = this.getPreferences(Context.MODE_PRIVATE);
+        prefs = this.getPreferences(Context.MODE_PRIVATE);
         highscore = prefs.getInt("highscore", 0);
 
         highscoreText = (TextView) findViewById(R.id.HighscoreTextView);
@@ -83,12 +84,6 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
-
-
-
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -103,9 +98,12 @@ public class MainActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.reset_highscore) {
+            highscore = 0;
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putInt("highscore", highscore);
+            editor.commit();
+            highscoreText.setText("High score: 0");
         }
 
         return super.onOptionsItemSelected(item);
