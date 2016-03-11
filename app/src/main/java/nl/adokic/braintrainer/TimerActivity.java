@@ -2,12 +2,14 @@ package nl.adokic.braintrainer;
 
 import android.content.Intent;
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Random;
 
@@ -15,6 +17,7 @@ public class TimerActivity extends AppCompatActivity {
     private TextView scoreText, timerText;
     private Button buttons[];
     private int goedeAntwoord, foutAntwoord, aantalBeurten, aantalGoed;
+    CountDownTimer timer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +38,7 @@ public class TimerActivity extends AppCompatActivity {
     }
 
     private void startTimer(){
-        new CountDownTimer(30000 + 100, 1000){
+        timer = new CountDownTimer(30000 + 100, 1000){
 
             @Override
             public void onTick(long l) {
@@ -48,8 +51,10 @@ public class TimerActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(),MainActivity.class);
                 intent.putExtra("score", aantalGoed);
                 startActivity(intent);
+                finish();
             }
-        }.start();
+        };
+        timer.start();
     }
 
     private void maakSom(){
@@ -82,5 +87,14 @@ public class TimerActivity extends AppCompatActivity {
         }
         scoreText.setText(aantalGoed+"/"+aantalBeurten);
         maakSom();
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        timer.cancel();
+        Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 }
