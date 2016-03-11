@@ -65,7 +65,7 @@ public class TimerActivity extends AppCompatActivity {
         for(int i = 0; i < buttons.length; i++){
             if(i != goedeAntwoordKnop){
                 foutAntwoord = randomizer.nextInt(100)+1;
-                while(foutAntwoord == goedeAntwoord && foutAntwoord == foutAntwoord){
+                while(foutAntwoord == goedeAntwoord){
                     foutAntwoord = randomizer.nextInt(100)+1;
                 }
                 buttons[i].setText(String.valueOf(foutAntwoord));
